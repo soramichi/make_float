@@ -19,13 +19,13 @@ public:
     data[0] = fraction & 0xff;
   }
 
-  float get() {
+  float to_float() {
     return *((float*)data);
   }
 };
 
 void test_float() {
-  float f = Float(0, 124, 2097152).get();
+  float f = Float(0, 124, 2097152).to_float();
   float answer = 0.15625;
 
   if (f != answer) {
@@ -40,8 +40,8 @@ int main(){
   Float f = Float(0, 124, 2097152); // 0.15625
   Float g = Float(1, 124, 2097152); // -0.15625
 
-  printf("f: %f\n", f.get());
-  printf("g: %f\n", g.get());
+  printf("f: %f\n", f.to_float());
+  printf("g: %f\n", g.to_float());
   
   return 0;
 }
