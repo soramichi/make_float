@@ -2,7 +2,16 @@
 #include <cstdlib>
 #include <cstring>
 
-using namespace std;
+// https://gcc.gnu.org/onlinedocs/gcc-3.4.3/g77/Floating_002dpoint-Exception-Handling.html
+#define _GNU_SOURCE 1
+#include <fenv.h>
+static void __attribute__ ((constructor))
+trapfpe ()
+{
+  // Enable some exceptions.  At startup all exceptions are masked. 
+  feenableexcept (FE_INVALID|FE_DIVBYZERO|FE_OVERFLOW);
+}
+
 
 class Float {  
 private:
@@ -39,9 +48,11 @@ int main(){
 
   Float f = Float(0, 124, 2097152); // 0.15625
   Float g = Float(1, 124, 2097152); // -0.15625
+  Float nan = Float(0, 255, 12345); // nan
 
   printf("f: %f\n", f.to_float());
   printf("g: %f\n", g.to_float());
-  
+  printf("nan: %f\n", nan.to_float()); // floating point exception
+
   return 0;
 }
