@@ -41,7 +41,7 @@ int main(){
   Float g = Float(1, 124, 2097152); // -0.15625
 
   printf("f: %f\n", f.get());
-  printf("f: %f\n", g.get());
+  printf("g: %f\n", g.get());
   
   return 0;
 }
