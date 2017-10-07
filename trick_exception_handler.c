@@ -28,24 +28,24 @@ void handler(int signum, siginfo_t* info, void* _context) {
   printf("xmm0: 0x%x\n", context->uc_mcontext.fpregs->_xmm[0]);
 
   // Usage:
-  //   validate only one from Patter 1 - 3, and comment-out the others
+  //     validate only one from Patter 1 - 3, and comment-out the others
   
   // Pattern 1:
-  //   Jump back to the 'next' instruction of 'addss  %xmm1,%xmm0'.
-  //   Because xmm = 1.0 right now and xmm0 is stored to 'a' by 'movss  %xmm0,-0x8(%rbp)',
-  //   'a' is 1.0 when it is printed.
+  //     Jump back to the 'next' instruction of 'addss  %xmm1,%xmm0'.
+  //     Because xmm = 1.0 right now and xmm0 is stored to 'a' by 'movss  %xmm0,-0x8(%rbp)',
+  //     'a' is 1.0 when it is printed.
   context->uc_mcontext.gregs[REG_RIP] = context->uc_mcontext.gregs[REG_RIP] + 4;
 
   // Pattern 2:
-  //   Jump back to the 'next next' instruction of "addss  %xmm1,%xmm0".
-  //   Because 'movss  %xmm0,-0x8(%rbp)' is skipped and 'a' is not updated,
-  //   'a' is 2.0 when it is printed.
+  //     Jump back to the 'next next' instruction of "addss  %xmm1,%xmm0".
+  //     Because 'movss  %xmm0,-0x8(%rbp)' is skipped and 'a' is not updated,
+  //     'a' is 2.0 when it is printed.
   // context->uc_mcontext.gregs[REG_RIP] = context->uc_mcontext.gregs[REG_RIP] + 9;
 
   // Pattern 3:
-  //   Set xmm0 = 3.0 and jump back to the 'next' instruction of 'addss  %xmm1,%xmm0'.
-  //   Because xmm0 is stored to 'a' by 'movss  %xmm0,-0x8(%rbp)',
-  //   'a' is 3.0 when it is printed.
+  //     Set xmm0 = 3.0 and jump back to the 'next' instruction of 'addss  %xmm1,%xmm0'.
+  //     Because xmm0 is stored to 'a' by 'movss  %xmm0,-0x8(%rbp)',
+  //     'a' is 3.0 when it is printed.
   // context->uc_mcontext.fpregs->_xmm[0].element[0] = 0x40400000; // 3.0
   // context->uc_mcontext.gregs[REG_RIP] = context->uc_mcontext.gregs[REG_RIP] + 4;
   
