@@ -28,7 +28,7 @@ void handler(int signum, siginfo_t* info, void* _context) {
   printf("xmm0: 0x%x\n", context->uc_mcontext.fpregs->_xmm[0]);
 
   // Usage:
-  //     validate only one from Patter 1 - 3, and comment-out the others
+  //     validate only one from Pattern 1 - 3, and comment-out the others
   
   // Pattern 1:
   //     Jump back to the 'next' instruction of 'addss  %xmm1,%xmm0'.
