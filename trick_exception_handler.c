@@ -65,11 +65,11 @@ int main(){
   sigaction(SIGFPE, &action, NULL);
 
   // exception
-  //   f3 0f 10 4d fc          movss  -0x4(%rbp),%xmm1                                       // xmm1 = nan
-  //   f3 0f 10 05 f9 00 00    movss  0xf9(%rip),%xmm0        # 938 <_IO_stdin_used+0x48>    // xmm0 = 1.0
+  //   f3 0f 10 4d fc          movss  -0x4(%rbp),%xmm1   # xmm1 = nan
+  //   f3 0f 10 05 f9 00 00    movss  0xf9(%rip),%xmm0   # xmm0 = 1.0
   //   00
-  //   f3 0f 58 c1             addss  %xmm1,%xmm0                                            // xmm0 = xmm1 + xmm0
-  //   f3 0f 11 45 f8          movss  %xmm0,-0x8(%rbp)                                       // a = xmm0
+  //   f3 0f 58 c1             addss  %xmm1,%xmm0        # xmm0 = xmm1 + xmm0
+  //   f3 0f 11 45 f8          movss  %xmm0,-0x8(%rbp)   # a = xmm0
   a = nan + 1.0;
 
   printf("the end of main (%f)\n", a);
